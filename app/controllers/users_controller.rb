@@ -34,7 +34,7 @@ class UsersController < ApplicationController
   def update
     @user = User.find_by_credentials(@user.email, password)
     if user.update
-      flash[:notice] << "Successfully updated."
+      flash[:notice] = "Successfully updated."
       redirect_to user_url(@user)
     else
       flash.now[:errors]
@@ -47,7 +47,7 @@ class UsersController < ApplicationController
 
     if @user.destroy
       sign_out!
-      flash[:notice] << "Account deleted"
+      flash[:notice] = "Account deleted"
       redirect_to new_user_url
     else
       flash.now[errors]
