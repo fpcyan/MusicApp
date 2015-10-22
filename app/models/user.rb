@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
 
   validates :email, :password_digest, :session_token, presence: true
   validates :email, uniqueness: true
-  validates :password, length: { minimum: 6, null: true }
+  validates :password, length: { minimum: 6, allow_nil: true }
 
 
   def self.find_by_credentials(email, password)
@@ -41,6 +41,7 @@ class User < ActiveRecord::Base
 
   def reset_session_token!
     self.session_token = generate_session_token
+    save!
   end
 
   private

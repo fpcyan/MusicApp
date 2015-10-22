@@ -10,6 +10,7 @@ class UsersController < ApplicationController
 
     if @user.save
       flash[:notice] = "Welcome!"
+      sign_in(@user)
       redirect_to user_url(@user)
     else
       flash.now[:errors]
@@ -18,7 +19,12 @@ class UsersController < ApplicationController
   end
 
   def show
-    render :show
+    @user = User.find_by(id: params[:id])
+    if @user == current_user
+      render :show
+    else
+      redirect_to user_url(current_user.id)
+    end
   end
 
   def edit
@@ -56,6 +62,6 @@ class UsersController < ApplicationController
     end
 
     def ensure_signed_in
-      redirect_to new_user_url unless signed_in?
+      (redirect_to new_user_url) unless signed_in?
     end
 end
