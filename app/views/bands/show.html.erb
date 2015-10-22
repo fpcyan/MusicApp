@@ -1,0 +1,56 @@
+<h1> <%= @band.name %> Band Page </h1>
+
+<form
+  method="get"
+  action="<%= edit_band_url %>">
+    <button>
+      Edit
+    </button>
+</form>
+  <br>
+
+<table>
+  <caption> Album List </caption>
+    <colgroup span"3"></colgroup>
+    <tr>
+      <th>Album Title</th>
+      <th>Album Type</th>
+      <th># of tracks</th>
+    </tr>
+
+    <% @band.albums.each do |album| %>
+      <tr>
+        <td><a href=""><%= album.title %><a></td>
+        <td><%= album.rtype %></td>
+        <td><%= album.tracks.to_a.size %></td>
+      </tr>
+    <% end %>
+</table>
+<br>
+<br>
+
+  <a href="">Add an Album</a>
+<br>
+<br>
+
+
+
+<form
+  method="post"
+  action="<%= band_url %>">
+  <input
+    type="hidden"
+    name="authenticity_token"
+    value="<%= form_authenticity_token %>">
+  </input>
+
+  <input
+    type="hidden"
+    name="_method"
+    value="delete">
+  </input>
+
+  <button>
+    Delete
+  </button>
+</form>

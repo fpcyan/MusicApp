@@ -1,0 +1,34 @@
+<% unless signed_in? %>
+  <form method="get" action="<%= new_session_url %>">
+    <p>
+      <button>
+        Sign In
+      </button>
+      
+      or
+
+      <button
+      formaction="<%= new_user_url %>">
+      Sign Up
+      </button>
+    </p>
+  </form>
+
+<% else %>
+  <form method="post" action="<%= session_url %>" >
+    <input
+      type="hidden"
+      name="authenticity_token"
+      value="<%= form_authenticity_token %>">
+    </input>
+
+    <input
+      type="hidden"
+      name="_method"
+      value="delete">
+    </input>
+
+    <button>
+      Sign Out
+    </button>
+<% end %>

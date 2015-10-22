@@ -1,12 +1,12 @@
 require 'byebug'
 class User < ActiveRecord::Base
 
-  before_validation :ensure_session_token
 
   validates :email, :password_digest, :session_token, presence: true
   validates :email, uniqueness: true
   validates :password, length: { minimum: 6, allow_nil: true }
 
+  after_initialize :ensure_session_token
 
   def self.find_by_credentials(email, password)
     user = User.find_by(email: email)
@@ -20,7 +20,6 @@ class User < ActiveRecord::Base
   end
 
   def password=(password)
-    # debugger
     @password = password
 
     self.password_digest = BCrypt::Password.create(password)

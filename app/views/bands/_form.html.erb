@@ -1,0 +1,36 @@
+<% @band.nil? ? (value, action = "post", bands_url) : (value, action = "patch", band_url) %>
+
+<form
+  method="post"
+  action="<%= action %>">
+
+  <input
+    type="hidden"
+    name="authenticity_token"
+    value="<%= form_authenticity_token %>">
+
+  <% unless @band.nil? %>
+    <input
+      type="hidden"
+      name="_method"
+      value="patch">
+  <% end %>
+
+  <label>
+    Band Name:
+    <input
+      type="text"
+      name="bands[name]"
+      placeholder="Pink Floyd">
+      <%= @band.name unless @band.nil? %>
+    </input>
+  </label>
+  <br>
+  <br>
+
+  <% if @band.nil? %>
+    <button>Add Band</button>
+  <% else %>
+    <button>Edit Band</button>
+  <% end %>
+</form>

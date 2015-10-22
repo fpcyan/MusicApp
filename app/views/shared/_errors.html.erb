@@ -1,22 +1,8 @@
 
-<% if flash.now[:errors] %>
-  <% flash.now[:errors].each do |error| %>
-    <%= error %>
+<% if flash %>
+  <% flash.each do |notification| %>
+    <%= notification.last %>
     <br>
 
   <% end %>
 <% end %>
-
-<% if flash[:errors] %>
-  <% flash[:errors].each do |error| %>
-    <%= error %>
-    <br>
-
-  <% end %>
-<% end %>
-
-<% if flash[:notice] %>
-  <%= flash[:notice] %>
-    <br>
-
-  <% end %>

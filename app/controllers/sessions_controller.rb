@@ -20,8 +20,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    @user = current_user
-    sign_out(@user)
+    sign_out
     flash[:notice] = "Successfully signed out. See you soon."
     redirect_to new_session_url
   end
