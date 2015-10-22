@@ -12,10 +12,10 @@ class User < ActiveRecord::Base
     user = User.find_by(email: email)
     return nil if user.nil?
 
-    if is_password?(password)
+    if user.password_digest.is_password?(password)
       user
     else
-      errors[:base] << "Incorrect username or password."
+      nil
     end
   end
 
@@ -30,9 +30,8 @@ class User < ActiveRecord::Base
     @password
   end
 
-  def is_password?(password)
-    password_digest = BCrypt::Password.new(password_digest)
-    password_digest == BCrypt::Password.is_password?(password)
+  def password_digest
+    BCrypt::Password.new(super)
   end
 
   def generate_session_token

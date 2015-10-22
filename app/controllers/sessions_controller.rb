@@ -6,27 +6,31 @@ class SessionsController < ApplicationController
 
   def create
     @user = User.find_by_credentials(
-      params[:email],
-      params[:password]
-    )
-    if sign_in(@user)
-      flash[:notice] << "Welcome back!"
-      redirect_to user_url(@user)
-    else
-      flash.now[:errors]
+      user_params[:email],
+      user_params[:password]
+      )
+    if @user.nil?
+      flash.now[:errors] = "Incorrect username or password."
       render :new
+    else
+      sign_in(@user)
+      flash[:notice] = "Welcome back!"
+      redirect_to user_url(@user)
     end
   end
 
   def destroy
-    if sign_out(current_user)
-      flash[:notice] << "Successfully signed out. See you soon."
-      redirect_to new_session_url
-    else
-      raise "failed to sign out"
-    end
+    @user = current_user
+    sign_out(@user)
+    flash[:notice] = "Successfully signed out. See you soon."
+    redirect_to new_session_url
   end
 
+  private
+
+    def user_params
+      params.require(:user).permit(:email, :password)
+    end
 
 
 
