@@ -25,4 +25,8 @@ class ApplicationController < ActionController::Base
     !!current_user
   end
 
+  def ensure_signed_in
+    (redirect_to new_user_url) unless signed_in?
+  end
+
 end

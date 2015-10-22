@@ -1,4 +1,5 @@
 class BandsController < ApplicationController
+  before_action :ensure_signed_in, except: [:index]
 
   def index
     @bands = Band.all
@@ -21,7 +22,7 @@ class BandsController < ApplicationController
       flash.now[:notice] = "Band successfully created!"
       redirect_to band_url(@band.id)
     else
-      flash.now[:errors]
+      flash.now[:errors] = @band.errors.full_messages
       render :new
     end
   end
@@ -32,6 +33,13 @@ class BandsController < ApplicationController
   end
 
   def update
+    @band = Band.find(params[:id])
+    if @band.update(band_params)
+      flash[:notice] = "Successfully updated."
+      redirect_to band_url(@band.id)
+    else
+      flash.now[:errors] = @band.errors.full_messages
+    end
   end
 
   def destroy

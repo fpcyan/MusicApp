@@ -5,7 +5,7 @@
 <br>
 <br>
 
-<% @bands.each do |band| %>
+<% @bands.sort_by { |band| band.name }.each do |band| %>
   <a href="<%= band_url(band) %>"><%= band.name %></a>
   <br>
   <br>
