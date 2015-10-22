@@ -40,13 +40,14 @@ class User < ActiveRecord::Base
   end
 
   def reset_session_token!
-    self.session_token = SecureRandom::urlsafe_base64
-    save!
+    self.session_token = generate_session_token
   end
 
-  def ensure_session_token
-    self.session_token ||= generate_session_token
-  end
+  private
+
+    def ensure_session_token
+      self.session_token ||= generate_session_token
+    end
 
 
 end
