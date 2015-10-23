@@ -1,0 +1,71 @@
+<% if album.persisted? %>
+  <% value, action, name, rtype = "patch", albums_url(album.id), album.band.name, album.rtype %>
+<% else %>
+  <% value, action, name, rtype = "post", albums_url, "", "" %>
+<% end %>
+
+<form
+  method="post"
+  action="<%= action %>">
+
+  <input
+    type="hidden"
+    name="authenticity_token"
+    value="<%= form_authenticity_token %>">
+
+    <input
+      type="hidden"
+      name="_method"
+      value="<%= value %>">
+
+  <label>
+    Which band made this album?
+    <select name="bands[name]">
+      <option></option>
+      <% bands.each do |band| %>
+        <option
+          value="<%= band.name %>"
+          <%= "selected" if name == band.name %>>
+        <%= band.name %>
+        </option>
+      <% end %>
+    </select>
+  </label>
+  <br>
+
+  <label>
+    Album Title:
+    <input
+      type="text"
+      name="albums[title]"
+      placeholder="In Utero"
+      value="<%= album.title %>">
+    </input>
+  </label>
+  <br>
+
+  <p> How was is recorded? </p>
+  <label>
+    <input
+      type="radio"
+      name="albums[rtype]"
+      value="Studio"
+      <%= "checked" if rtype == "Studio" %>>
+      Studio
+    </input>
+  </label>
+  <label>
+    <input
+      type="radio"
+      name="albums[rtype]"
+      value="Live"
+      <%= "checked" if rtype == "Live" %>>
+      Live
+    </input>
+  </label>
+  <br>
+  <br>
+
+  <button>Submit</button>
+
+</form>

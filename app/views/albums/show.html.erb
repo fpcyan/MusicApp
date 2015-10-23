@@ -1,0 +1,61 @@
+<h1> <%= @album.title %> Album Page </h1>
+
+<form
+  method="get"
+  action="<%= edit_album_url %>">
+    <button>
+      Edit Album
+    </button>
+</form>
+  <br>
+
+<table>
+  <caption> Track List </caption>
+    <colgroup span"3"></colgroup>
+    <tr>
+      <th>Track Title</th>
+      <th>Track Type</th>
+      <th>Lyrics (sample)</th>
+    </tr>
+
+    <% @album.tracks.each do |track| %>
+      <tr>
+        <td><%= track.title %></td>
+        <td><%= track.track_type %></td>
+        <td><% if track.lyrics.nil? %>
+              <a href="<%= edit_track_url(track.id) %>">No lyrics, yet. Add lyrics!</a>
+            <% else %>
+              lyrics_link(track) %>
+            <% end %>
+        </td>
+      </tr>
+    <% end %>
+</table>
+<br>
+<br>
+
+  <a href="<%= new_album_track_url(@album.id) %>">Add a Track</a>
+<br>
+<br>
+
+
+
+<form
+  method="post"
+  action="<%= album_url %>">
+  <input
+    type="hidden"
+    name="authenticity_token"
+    value="<%= form_authenticity_token %>">
+  </input>
+
+  <input
+    type="hidden"
+    name="_method"
+    value="delete">
+  </input>
+
+  <button>
+    Delete
+  </button>
+</form>

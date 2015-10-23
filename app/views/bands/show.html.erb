@@ -20,7 +20,7 @@
 
     <% @band.albums.each do |album| %>
       <tr>
-        <td><a href=""><%= album.title %><a></td>
+        <td><a href="<%= album_url(album.id) %>"><%= album.title %><a></td>
         <td><%= album.rtype %></td>
         <td><%= album.tracks.to_a.size %></td>
       </tr>
@@ -29,7 +29,7 @@
 <br>
 <br>
 
-  <a href="">Add an Album</a>
+  <a href="<%= new_band_album_url(@band.id) %>">Add an Album</a>
 <br>
 <br>
 
