@@ -3,7 +3,7 @@ module ApplicationHelper
 
   def lyrics_link(track)
     <<-HTML.html_safe
-      <a href="<%= lyrics_track %>">
+      <a href="<%= track_url %>">
         #{h(track.lyrics[0..100])}
       </a>
     HTML
